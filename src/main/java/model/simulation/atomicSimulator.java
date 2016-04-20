@@ -8,24 +8,35 @@ package model.simulation;
 import java.util.*;
 
 import GenCol.*;
+import model.devs.agent.StatefulEntity;
 
 import model.modeling.*;
 import util.*;
 
-public class atomicSimulator
-        implements AtomicSimulatorInterface {//for usual devs
+public class atomicSimulator implements AtomicSimulatorInterface {//for usual devs
 
     protected double tL, tN;
     public MessageInterface input, output;
     protected IOBasicDevs myModel;
+    protected List<Map> iterationsGlobalState; //var used to store every iteration state
 
     public atomicSimulator() {
+        this.iterationsGlobalState = new ArrayList<>();
     }
 
     public atomicSimulator(IOBasicDevs atomic) {
         myModel = atomic;
         input = new message();
         output = new message();
+        this.iterationsGlobalState = new ArrayList<>();
+    }    
+        
+    /**
+     * Getter for simulation global result
+     * @return 
+     */
+    public List<Map> getSimulationResults(){
+        return iterationsGlobalState;
     }
 
     public double nextTN() {
@@ -58,7 +69,12 @@ public class atomicSimulator
     }
 
     public synchronized void showModelState() {
-        myModel.showState();
+        //myModel.showState(); //core defaults
+        StatefulEntity e = (StatefulEntity) myModel;
+        Map iterationGlobalState = e.getState();
+        iterationGlobalState.put("time", tL); //add time to the state
+        iterationsGlobalState.add(iterationGlobalState);
+        //System.out.println(iterationGlobalState); //for testing purpose uncomment
     }
 
     public synchronized void initialize() { //for non real time usage, assume the time begins at 0

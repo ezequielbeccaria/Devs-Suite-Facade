@@ -13,23 +13,27 @@ import model.modeling.devs;
 import model.modeling.message;
 
 /**
- *
+ * Agente de prueba para entender como funciona el core de DEVS-Suite
+ * Elige las entidades (otros devs atomicos) sobre las que actua aleatoriamente 
+ * Las acciones posibles a realizar sobre las entidades son prestablecidas: 
+ * UP,DOWN,LEFT,RIGHT,WAIT
+ * Las cuales son elegidas aleatoreamente en cada interacción
  * @author ezequiel
  */
 public class DummyAgent extends atomic implements StatefulEntity {
 
-    private final List<devs> actionalbleDevsList;
-    private final List<ActionEntity> actionsList;
-    private final List<entity> inputEntities;
+    private final List<devs> actionalbleDevsList; //Entidades sobre las que puede actuar
+    private final List<ActionEntity> actionsList; //Posibles acciones a realizar
+    private final List<entity> inputEntities; //Variable donde se almacenan los estimulos externos temporalmente
 
     public DummyAgent(List<devs> actionalbleDevsList) {
-        super("DummyAgent");
-        this.actionalbleDevsList = actionalbleDevsList;
+        super("DummyAgent"); //nombre identificatorio del devs atomico
+        this.actionalbleDevsList = actionalbleDevsList; 
         this.actionsList = createActionsList();
-        this.sigma = 7D;
-        this.inputEntities = new ArrayList<>();
-        //Create input port
-        addInport("input");
+        this.sigma = 7D; //seteado de manera arbitraria, sigma>0
+        this.inputEntities = new ArrayList<>(); //inicializo la variable
+        //Create unique input port
+        addInport("input"); 
         //Create outputs port (one for each actionable devs)
         for (devs ad : actionalbleDevsList) {
             addOutport("out_" + ad.getName());
@@ -41,8 +45,11 @@ public class DummyAgent extends atomic implements StatefulEntity {
     }
 
     @Override
+    /**
+     * Method that init the atomic devs
+     */
     public void initialize() {
-        phase = "passive";
+        phase = "passive"; //this inicial state/phase is used as flag
         super.initialize();
     }
 

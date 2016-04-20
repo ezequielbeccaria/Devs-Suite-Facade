@@ -23,7 +23,6 @@ public class coordinator extends atomicSimulator implements CoordinatorInterface
     protected double e;
     protected double INFINITY = DevsInterface.INFINITY;
     protected couprel coupInfo, extCoupInfo;
-    protected List<Map> iterationsGlobalState;
 
     public coordinator() {
         this.iterationsGlobalState = new ArrayList<>();
@@ -47,7 +46,6 @@ public class coordinator extends atomicSimulator implements CoordinatorInterface
 
     public coordinator(coupledDevs c) {
         this(c, true, null);
-        this.iterationsGlobalState = new ArrayList<>();
     }
 
     public coordinator(coupledDevs c, boolean setSimulators, Object dummyParameter) {
@@ -73,10 +71,6 @@ public class coordinator extends atomicSimulator implements CoordinatorInterface
 
     public coupledDevs getCoupled() {
         return myCoupled;
-    }
-    
-    public List<Map> getSimulationResult(){
-        return iterationsGlobalState;
     }
 
     public void setSimulators() {
@@ -402,19 +396,18 @@ public class coordinator extends atomicSimulator implements CoordinatorInterface
     }
 
     public void showModelState() {
-//		simulators.tellAll("showModelState");
+        //simulators.tellAll("showModelState"); //core defaults
         StatefulEntity e = (StatefulEntity) myCoupled;
         Map iterationGlobalState = e.getState();
         iterationGlobalState.put("time", tL); //add time to the state
         iterationsGlobalState.add(iterationGlobalState);
-        System.out.println(iterationGlobalState);
+        //System.out.println(iterationGlobalState); //for testing purpose uncomment
     }
 
     public void simulate(int num_iter) {
         int i = 1;
         tN = nextTN();
         while ((tN < DevsInterface.INFINITY) && (i <= num_iter)) {
-            System.out.println("ITERATION " + i + " ,time: " + tN); //added for testing
             Logging.log("ITERATION " + i + " ,time: " + tN, Logging.full);
 
             computeInputOutput(tN);
