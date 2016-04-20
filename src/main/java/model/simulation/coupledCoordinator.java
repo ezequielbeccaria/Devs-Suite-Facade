@@ -199,6 +199,7 @@ public class coupledCoordinator extends coordinator implements CoupledCoordinato
         tN = nextTN();
         while ((tN < DevsInterface.INFINITY) && (i <= num_iter)) {
             Logging.log("ITERATION " + i + " ,time: " + tN, Logging.full);
+            System.out.println("ITERATION " + i + " ,time: " + tN); //added for testing
             computeInputOutput(tN);
             showOutput();
             DeltFunc(tN);

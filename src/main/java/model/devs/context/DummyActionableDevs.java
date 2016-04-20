@@ -36,7 +36,7 @@ public class DummyActionableDevs extends atomic implements StatefulEntity{
     @Override
     public void deltext(double e, message x) {
         Continue(e);        
-        phase = "input_received";        
+        phase = "input_received_"+x.getValOnPort("in", 0).toString();        
     }
 
     /**

@@ -3,6 +3,7 @@ package model.devs.agent;
 
 import GenCol.entity;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
@@ -25,7 +26,7 @@ public class DummyAgent extends atomic implements StatefulEntity{
         super("DummyAgent");
         this.actionalbleDevsList = actionalbleDevsList;
         this.actionsList = createActionsList();
-        this.sigma = 1D;
+        this.sigma = 7D;
         this.inputEntities = new ArrayList<>();
         //Create input port
         addInport("input");        
@@ -71,12 +72,12 @@ public class DummyAgent extends atomic implements StatefulEntity{
     @Override
     public void deltint() {
         if(inputEntities.isEmpty()){
-            devs selectedDevs = getRandomActionalbleDevs();
-            ActionEntity selectedAction = getRandomAction();
-            content con = new content("out_"+selectedDevs.getName(), selectedAction);
+            devs d = getRandomActionalbleDevs();
+            ActionEntity ae = getRandomAction();
+            content con = new content("out_"+d.getName(), ae);
             inputEntities.add(con);
-        }            
-        holdIn("passive", sigma);        
+            holdIn("out_"+d.getName()+"_"+ae.getName(), sigma);        
+        }                    
     }
 
     /**
@@ -89,6 +90,7 @@ public class DummyAgent extends atomic implements StatefulEntity{
         inputEntities.stream().forEach((e) -> {   
             m.add(e);
         });
+        inputEntities.clear();
         return m;
     }
     
@@ -122,6 +124,9 @@ public class DummyAgent extends atomic implements StatefulEntity{
 
     @Override
     public Map getState() {       
-        return null;
+        Map<String, Object> state = new HashMap<>();
+        state.put("name", name);
+        state.put("id", phase);
+        return state;
     }
 }
