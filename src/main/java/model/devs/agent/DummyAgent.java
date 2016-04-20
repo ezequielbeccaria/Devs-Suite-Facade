@@ -1,4 +1,3 @@
-
 package model.devs.agent;
 
 import GenCol.entity;
@@ -17,7 +16,8 @@ import model.modeling.message;
  *
  * @author ezequiel
  */
-public class DummyAgent extends atomic implements StatefulEntity{
+public class DummyAgent extends atomic implements StatefulEntity {
+
     private final List<devs> actionalbleDevsList;
     private final List<ActionEntity> actionsList;
     private final List<entity> inputEntities;
@@ -29,19 +29,17 @@ public class DummyAgent extends atomic implements StatefulEntity{
         this.sigma = 7D;
         this.inputEntities = new ArrayList<>();
         //Create input port
-        addInport("input");        
+        addInport("input");
         //Create outputs port (one for each actionable devs)
-        for(devs ad : actionalbleDevsList){
-            addOutport("out_"+ad.getName());
+        for (devs ad : actionalbleDevsList) {
+            addOutport("out_" + ad.getName());
         }
-    }    
+    }
 
     public List<devs> getActionalbleDevsList() {
         return actionalbleDevsList;
     }
-    
-    
-    
+
     @Override
     public void initialize() {
         phase = "passive";
@@ -49,65 +47,76 @@ public class DummyAgent extends atomic implements StatefulEntity{
     }
 
     /**
-     * Si recibe un estimulo externo, almacena los estimulos y continua hasta 
+     * Si recibe un estimulo externo, almacena los estimulos y continua hasta
      * sigma = sigma - e (e -> 'elapsed time')
+     *
      * @param e
-     * @param x 
+     * @param x
      */
     @Override
     public void deltext(double e, message x) {
-        Continue(e);        
+        Continue(e);
         inputEntities.clear();
         for (int i = 0; i < x.getLength(); i++) {
             if (messageOnPort(x, "input", i)) {
-                inputEntities.add(x.getValOnPort("input", i));                
+                inputEntities.add(x.getValOnPort("input", i));
             }
-        }        
+        }
     }
 
     /**
-     * Cuando se cumple el tiempo de trancisión interna, si NO posee estimulos externos previos,
-     * crea un mensaje random para una entidad (DEVS) y lo almacena para envialo
+     * Función de transición interna
+     * Actua de bandera ya que se ejecuta despues de out()
+     * Cuando se ejecuta la primera vez (en el t=0.0) activa el componente para 
+     * que pueda empezar a enviar datos.
      */
     @Override
     public void deltint() {
-        if(inputEntities.isEmpty()){
-            devs d = getRandomActionalbleDevs();
-            ActionEntity ae = getRandomAction();
-            content con = new content("out_"+d.getName(), ae);
-            inputEntities.add(con);
-            holdIn("out_"+d.getName()+"_"+ae.getName(), sigma);        
-        }                    
+        if ("passive".equals(phase)) {
+            holdIn("active", sigma);
+        }
     }
 
     /**
-     * Envia el contenido almacenado a los Devs sobre los que actua el agente
-     * @return 
+     * si NO posee estimulos externos previos (almacenados en inputEntities), 
+     * crea un mensaje random para una entidad (DEVS) y envia el contenido (el previo o el creado)
+     * a los Devs sobre los que actua el agente
+     *
+     * @return
      */
     @Override
-    public message out() {        
+    public message out() {
         message m = new message();
-        inputEntities.stream().forEach((e) -> {   
+        if (!"passive".equals(phase) && inputEntities.isEmpty()) {
+            devs d = getRandomActionalbleDevs();
+            ActionEntity ae = getRandomAction();
+            content con = new content("out_" + d.getName(), ae);
+            inputEntities.add(con);
+            holdIn("out_" + d.getName() + "_" + ae.getName(), sigma);
+        }
+        inputEntities.stream().forEach((e) -> {
             m.add(e);
         });
         inputEntities.clear();
         return m;
     }
-    
+
     /**
      * Get random action from the actions List
-     * @return 
+     *
+     * @return
      */
-    private ActionEntity getRandomAction(){
+    private ActionEntity getRandomAction() {
         int RandomActionIndex = ThreadLocalRandom.current().nextInt(0, actionsList.size());
         return actionsList.get(RandomActionIndex);
     }
-    
+
     /**
      * Get random Devs form the Devs List
-     * @return 
+     *
+     * @return
      */
-    private devs getRandomActionalbleDevs(){
+    private devs getRandomActionalbleDevs() {
         int RandomDevsIndex = ThreadLocalRandom.current().nextInt(0, actionalbleDevsList.size());
         return actionalbleDevsList.get(RandomDevsIndex);
     }
@@ -123,7 +132,7 @@ public class DummyAgent extends atomic implements StatefulEntity{
     }
 
     @Override
-    public Map getState() {       
+    public Map getState() {
         Map<String, Object> state = new HashMap<>();
         state.put("name", name);
         state.put("id", phase);
