@@ -7,9 +7,9 @@ import GenCol.entity;
  *
  * @author ezequiel
  */
-public class ActionEntity extends entity{    
+public class Action extends entity{    
 
-    public ActionEntity(String name) {
+    public Action(String name) {
         super(name);
     }
     

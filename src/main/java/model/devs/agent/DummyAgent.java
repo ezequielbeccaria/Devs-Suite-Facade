@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
-import model.devs.action.ActionEntity;
+import model.devs.action.Action;
 import model.modeling.atomic;
 import model.modeling.content;
 import model.modeling.devs;
@@ -23,7 +23,7 @@ import model.modeling.message;
 public class DummyAgent extends atomic implements StatefulEntity {
 
     private final List<devs> actionalbleDevsList; //Entidades sobre las que puede actuar
-    private final List<ActionEntity> actionsList; //Posibles acciones a realizar
+    private final List<Action> actionsList; //Posibles acciones a realizar
     private final List<entity> inputEntities; //Variable donde se almacenan los estimulos externos temporalmente
 
     public DummyAgent(List<devs> actionalbleDevsList) {
@@ -96,7 +96,7 @@ public class DummyAgent extends atomic implements StatefulEntity {
         message m = new message();
         if (!"passive".equals(phase) && inputEntities.isEmpty()) {
             devs d = getRandomActionalbleDevs();
-            ActionEntity ae = getRandomAction();
+            Action ae = getRandomAction();
             content con = new content("out_" + d.getName(), ae);
             inputEntities.add(con);
             holdIn("out_" + d.getName() + "_" + ae.getName(), sigma);
@@ -113,7 +113,7 @@ public class DummyAgent extends atomic implements StatefulEntity {
      *
      * @return
      */
-    private ActionEntity getRandomAction() {
+    private Action getRandomAction() {
         int RandomActionIndex = ThreadLocalRandom.current().nextInt(0, actionsList.size());
         return actionsList.get(RandomActionIndex);
     }
@@ -128,13 +128,13 @@ public class DummyAgent extends atomic implements StatefulEntity {
         return actionalbleDevsList.get(RandomDevsIndex);
     }
 
-    private List<ActionEntity> createActionsList() {
-        List<ActionEntity> actions = new ArrayList(5);
-        actions.add(new ActionEntity("UP"));
-        actions.add(new ActionEntity("DOWN"));
-        actions.add(new ActionEntity("RIGHT"));
-        actions.add(new ActionEntity("LEFT"));
-        actions.add(new ActionEntity("WAIT"));
+    private List<Action> createActionsList() {
+        List<Action> actions = new ArrayList(5);
+        actions.add(new Action("UP"));
+        actions.add(new Action("DOWN"));
+        actions.add(new Action("RIGHT"));
+        actions.add(new Action("LEFT"));
+        actions.add(new Action("WAIT"));
         return actions;
     }
 
