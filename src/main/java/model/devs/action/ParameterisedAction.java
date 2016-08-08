@@ -8,9 +8,14 @@ package model.devs.action;
  * @param <T>
  * @date 20/07/2016  
  */
-public class ParameterisedAction<T> extends Action{
+public class ParameterisedAction<T> extends Action {
     private T param;
 
+    /**
+     * Constructor
+     * @param param
+     * @param id 
+     */
     public ParameterisedAction(T param, String id) {
         super(id);
         this.param = param;       
@@ -22,6 +27,5 @@ public class ParameterisedAction<T> extends Action{
 
     public void setParam(T param) {
         this.param = param;
-    }   
-    
+    }       
 }
