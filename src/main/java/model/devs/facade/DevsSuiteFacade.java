@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Map;
 import model.modeling.atomic;
 import model.modeling.digraph;
-import model.simulation.atomicSimulator;
-import model.simulation.coupledCoordinator;
+import model.simulation.AtomicTimedSimulator;
+import model.simulation.CoupledTimedCoordinator;
 
 /**
  * Facade class to use Devs-Suite core.
@@ -14,7 +14,8 @@ import model.simulation.coupledCoordinator;
  */
 public class DevsSuiteFacade {
     //Model Simulator/coordinator 
-    private final atomicSimulator simulator;
+    private final AtomicTimedSimulator atomicSimulator;
+    private final CoupledTimedCoordinator coupledCoordinator;
 
     /**
      * Constructor to simulate a DEVSs Coupled Model
@@ -22,7 +23,8 @@ public class DevsSuiteFacade {
      * @param instanceModel
      */
     public DevsSuiteFacade(digraph instanceModel) {
-        this.simulator = new coupledCoordinator(instanceModel, true); //SetSimulators = true 
+        this.atomicSimulator = null;
+        this.coupledCoordinator = new CoupledTimedCoordinator(instanceModel, true); //SetSimulators = true 
     }
 
     /**
@@ -31,8 +33,9 @@ public class DevsSuiteFacade {
      * @param instanceModel
      */
     public DevsSuiteFacade(atomic instanceModel) {
-        this.simulator = new atomicSimulator(instanceModel);
-        this.simulator.initialize(0); //Inicialize at currentTime
+        this.coupledCoordinator = null;
+        this.atomicSimulator = new AtomicTimedSimulator(instanceModel);
+        this.atomicSimulator.initialize(0D); //Inicialize at currentTime
     }
 
     /**
@@ -40,12 +43,33 @@ public class DevsSuiteFacade {
      *
      * @param iterations
      */
-    public void simulate(Integer iterations) {
-        simulator.simulate(iterations); //Start Simulation
+    public void simulate(int iterations) {
+        if(atomicSimulator!=null){
+            atomicSimulator.simulate(iterations); //Start Simulation
+        }else{
+            coupledCoordinator.simulate(iterations); //Start Simulation
+        }
+    }
+    
+    /**
+     * Method to start the model simulation
+     *
+     * @param time
+     */
+    public void simulate(double time) {
+        if(atomicSimulator!=null){
+            atomicSimulator.simulate(time); //Start Simulation
+        }else{
+            coupledCoordinator.simulate(time); //Start Simulation
+        }
     }
 
     public List<Map> getSimulationResults() {
-        return simulator.getSimulationResults();
+        if(atomicSimulator!=null){
+            return atomicSimulator.getSimulationResults();
+        }else{
+            return coupledCoordinator.getSimulationResults();
+        }
     }
 
 }
