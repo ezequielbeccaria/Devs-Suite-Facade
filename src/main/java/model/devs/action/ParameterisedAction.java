@@ -8,7 +8,7 @@ package model.devs.action;
  * @param <T>
  * @date 20/07/2016  
  */
-public class ParameterisedAction<T> extends Action {
+public class ParameterisedAction<T> extends Action implements Comparable<Action>{
     private T param;
 
     /**
@@ -28,4 +28,15 @@ public class ParameterisedAction<T> extends Action {
     public void setParam(T param) {
         this.param = param;
     }       
+       
+    @Override
+    public int compareTo(Action aThat) {
+        final int BEFORE = -1;
+        final int EQUAL = 0;        
+       
+        int rta = super.compareTo(aThat);
+        if(rta!=0) return rta;
+        
+        return ((ParameterisedAction)aThat).getParam().equals(this.getParam())?EQUAL:BEFORE;
+    } 
 }

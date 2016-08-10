@@ -14,8 +14,13 @@ public class Action extends entity implements Comparable<Action>{
     }
 
     @Override
-    public int compareTo(Action that) {
-        return this.name.compareTo(that.name);
+    public int compareTo(Action aThat) {
+        
+        //this optimization is usually worthwhile, and can
+        //always be added
+        if (this == aThat) return 0;
+        
+        return this.name.compareTo(aThat.name);
     }
     
 }
