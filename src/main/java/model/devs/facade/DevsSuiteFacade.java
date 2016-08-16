@@ -43,7 +43,7 @@ public class DevsSuiteFacade {
      *
      * @param iterations
      */
-    public void simulate(int iterations) {
+    public void simulateIterations(int iterations) {
         if(atomicSimulator!=null){
             atomicSimulator.simulate(iterations); //Start Simulation
         }else{
@@ -56,7 +56,7 @@ public class DevsSuiteFacade {
      *
      * @param time
      */
-    public void simulate(double time) {
+    public void simulateTime(double time) {
         if(atomicSimulator!=null){
             atomicSimulator.simulate(time); //Start Simulation
         }else{
