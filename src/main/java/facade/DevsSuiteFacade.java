@@ -1,11 +1,11 @@
-package model.devs.facade;
+package facade;
 
+import facade.model.simulation.TimeAtomicSimulator;
 import java.util.List;
 import java.util.Map;
 import model.modeling.atomic;
 import model.modeling.digraph;
-import model.simulation.AtomicTimedSimulator;
-import model.simulation.CoupledTimedCoordinator;
+import facade.model.simulation.TimeCoordinator;
 
 /**
  * Facade class to use Devs-Suite core.
@@ -14,8 +14,8 @@ import model.simulation.CoupledTimedCoordinator;
  */
 public class DevsSuiteFacade {
     //Model Simulator/coordinator 
-    private final AtomicTimedSimulator atomicSimulator;
-    private final CoupledTimedCoordinator coupledCoordinator;
+    private final TimeAtomicSimulator atomicSimulator;
+    private final TimeCoordinator coordinator;
 
     /**
      * Constructor to simulate a DEVSs Coupled Model
@@ -24,7 +24,7 @@ public class DevsSuiteFacade {
      */
     public DevsSuiteFacade(digraph instanceModel) {
         this.atomicSimulator = null;
-        this.coupledCoordinator = new CoupledTimedCoordinator(instanceModel, true); //SetSimulators = true 
+        this.coordinator = new TimeCoordinator(instanceModel, true); //SetSimulators = true 
     }
 
     /**
@@ -33,8 +33,8 @@ public class DevsSuiteFacade {
      * @param instanceModel
      */
     public DevsSuiteFacade(atomic instanceModel) {
-        this.coupledCoordinator = null;
-        this.atomicSimulator = new AtomicTimedSimulator(instanceModel);
+        this.coordinator = null;
+        this.atomicSimulator = new TimeAtomicSimulator(instanceModel);
         this.atomicSimulator.initialize(0D); //Inicialize at currentTime
     }
 
@@ -47,7 +47,7 @@ public class DevsSuiteFacade {
         if(atomicSimulator!=null){
             atomicSimulator.simulate(iterations); //Start Simulation
         }else{
-            coupledCoordinator.simulate(iterations); //Start Simulation
+            coordinator.simulate(iterations); //Start Simulation
         }
     }
     
@@ -60,7 +60,7 @@ public class DevsSuiteFacade {
         if(atomicSimulator!=null){
             atomicSimulator.simulate(time); //Start Simulation
         }else{
-            coupledCoordinator.simulate(time); //Start Simulation
+            coordinator.simulate(time); //Start Simulation
         }
     }
 
@@ -68,7 +68,7 @@ public class DevsSuiteFacade {
         if(atomicSimulator!=null){
             return atomicSimulator.getSimulationResults();
         }else{
-            return coupledCoordinator.getSimulationResults();
+            return coordinator.getSimulationResults();
         }
     }
 
