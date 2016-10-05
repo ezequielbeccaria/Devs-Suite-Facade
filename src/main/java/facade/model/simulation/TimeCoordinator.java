@@ -4,7 +4,7 @@ package facade.model.simulation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import model.devs.agent.StatefulEntity;
+import facade.StatefulEntity;
 import model.modeling.Coupled;
 import model.modeling.DevsInterface;
 import model.simulation.coordinator;
