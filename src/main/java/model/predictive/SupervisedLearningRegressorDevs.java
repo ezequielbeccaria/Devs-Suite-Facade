@@ -12,7 +12,7 @@ public interface SupervisedLearningRegressorDevs {
      * @param x: independent variable
      * @param y: dependent variable
      */
-//    public void fit(double[] x, double[] y) throws Exception;
+//    public void fit(Double[] x, Double[] y) throws Exception;
     /**
      * Fit a model with 'n' independent variables and one dependent variable.
      * @param Xtrain training independet variables matrix
@@ -21,9 +21,9 @@ public interface SupervisedLearningRegressorDevs {
      * @param ytest: validation dependent variable array
      * @throws java.lang.Exception
      */
-    public void fit(double[][] Xtrain, double[][] Xtest, double[] ytrain, double[] ytest) throws Exception;
+    public void fit(Double[][] Xtrain, Double[][] Xtest, Double[] ytrain, Double[] ytest) throws Exception;
     /**
      * Get stimartor metrics after fitting
      */
-    public double[] metrics();
+    public Double[] metrics();
 }

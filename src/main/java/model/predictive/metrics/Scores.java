@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 
 package model.predictive.metrics;
 
@@ -23,9 +19,8 @@ public class Scores {
      * @param ypred
      * @return 
      */
-    public static double r2score(double[] yreal, double[] ypred){
-        double yrealMean = StatUtils.mean(yreal);
-        
+    public static double r2score(Double[] yreal, Double[] ypred){
+        double yrealMean = StatUtils.mean(org.apache.commons.lang3.ArrayUtils.toPrimitive(yreal, 0));        
         double dividend = 0;
         double divisor = 0;
         for(int i=0;i<yreal.length;i++){

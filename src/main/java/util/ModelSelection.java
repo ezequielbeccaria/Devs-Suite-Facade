@@ -16,7 +16,7 @@ public class ModelSelection {
      *
      * @param arrays
      */
-    public static Map<String, Object> trainTestSplit(double[][] X, double[] y, double testSize, double seed) throws Exception {
+    public static Map<String, Object> trainTestSplit(Double[][] X, Double[] y, double testSize, double seed) throws Exception {
         if (X.length != y.length)
             throw new Exception("Incopatible arrays lengths.");        
         if(testSize==0 || testSize==1)
@@ -29,12 +29,12 @@ public class ModelSelection {
         //Shuffle indexes
         shuffleArray(indexes);
         
-        int testItems = (int) testSize*n;
+        int testItems = (int) Math.ceil(testSize*n);
         
-        double[][] Xtest = new double[testItems][X[0].length];
-        double[][] Xtrain = new double[n-testItems][X[0].length];
-        double[] ytest = new double[testItems];
-        double[] ytrain = new double[n-testItems];
+        Double[][] Xtest = new Double[testItems][X[0].length];
+        Double[][] Xtrain = new Double[n-testItems][X[0].length];
+        Double[] ytest = new Double[testItems];
+        Double[] ytrain = new Double[n-testItems];
         
         for(int i=0; i<testItems; i++){
             Xtest[i]=X[indexes[i]];

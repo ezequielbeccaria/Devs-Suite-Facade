@@ -46,7 +46,7 @@ public class AtomicSVR extends atomic implements SupervisedLearningRegressorDevs
     }
 
     @Override
-    public void fit(double[][] Xtrain, double[][] Xtest, double[] ytrain, double[] ytest) throws Exception {
+    public void fit(Double[][] Xtrain, Double[][] Xtest, Double[] ytrain, Double[] ytest) throws Exception {
         svm_problem prob = new svm_problem();
         int recordCount = Xtrain.length;
         if (recordCount != ytrain.length) {
@@ -59,7 +59,7 @@ public class AtomicSVR extends atomic implements SupervisedLearningRegressorDevs
         prob.x = new svm_node[recordCount][featureCount];
 
         for (int i = 0; i < recordCount; i++) {
-            double[] features = Xtrain[i];
+            Double[] features = Xtrain[i];
             prob.x[i] = new svm_node[features.length];
             for (int j = 0; j < features.length; j++) {
                 svm_node node = new svm_node();
@@ -76,7 +76,7 @@ public class AtomicSVR extends atomic implements SupervisedLearningRegressorDevs
         param.nu = 0.5;
         param.C = 100;
         param.svm_type = svm_parameter.EPSILON_SVR;
-        param.kernel_type = svm_parameter.LINEAR;
+        param.kernel_type = svm_parameter.RBF;
         param.cache_size = 20000;
         param.eps = 0.001;
 
@@ -85,16 +85,16 @@ public class AtomicSVR extends atomic implements SupervisedLearningRegressorDevs
         evalModel(Xtest, ytest);
     }
     
-    private void evalModel(double[][] Xtest, double[] ytest){
-        double[] ypred = predict(Xtest); 
+    private void evalModel(Double[][] Xtest, Double[] ytest){
+        Double[] ypred = predict(Xtest); 
         
         this.score = Scores.r2score(ytest, ypred);
     }
 
-    private double[] predict(double[][] xtest) {
-        double[] yPred = new double[xtest.length];
+    private Double[] predict(Double[][] xtest) {
+        Double[] yPred = new Double[xtest.length];
         for (int k = 0; k < xtest.length; k++) {
-            double[] fVector = xtest[k];
+            Double[] fVector = xtest[k];
 
             svm_node[] nodes = new svm_node[fVector.length];
             for (int i = 0; i < fVector.length; i++) {
@@ -110,8 +110,8 @@ public class AtomicSVR extends atomic implements SupervisedLearningRegressorDevs
     }
 
     @Override
-    public double[] metrics() {
-        double[] scores = new double[1];
+    public Double[] metrics() {
+        Double[] scores = new Double[1];
         scores[0] = this.score;
         return scores;
     }
