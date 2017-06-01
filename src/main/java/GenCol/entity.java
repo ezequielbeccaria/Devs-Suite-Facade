@@ -6,7 +6,9 @@
  */
 package GenCol;
 
-public class entity extends Object implements EntityInterface {
+import java.io.Serializable;
+
+public class entity extends Object implements EntityInterface, Serializable {
 
     protected String name;
 

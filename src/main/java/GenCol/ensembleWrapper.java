@@ -14,7 +14,7 @@ import java.util.*;
 import java.lang.reflect.*;
 import java.io.*;
 
-public class ensembleWrapper {
+public class ensembleWrapper implements Serializable{
 
     private ensembleWrapper.ensemble el;
 
@@ -25,7 +25,7 @@ public class ensembleWrapper {
         return new ensemble(c);
     }
 
-    static class ensemble implements ensembleBasic, ensembleLogic {  //need static to be called from make
+    static class ensemble implements ensembleBasic, ensembleLogic, Serializable {  //need static to be called from make
 
         private Collection col;
         private countCoord c;
