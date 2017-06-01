@@ -97,7 +97,7 @@ public class AtomicSVRTest {
         System.out.println("Test DEVS atomic");
 
         DevsSuiteFacade facade = new DevsSuiteFacade(new DevsCoupledEnviroment("Coupled Test", instance));
-        facade.simulateTime(10);
+        facade.simulateToTime(10);
     }
 
     private class DevsCoupledEnviroment extends digraph {

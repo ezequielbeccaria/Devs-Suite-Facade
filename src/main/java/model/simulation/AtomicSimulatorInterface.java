@@ -9,12 +9,13 @@ package model.simulation;
 import java.util.*;
 
 import GenCol.*;
+import java.io.Serializable;
 
 
 import model.modeling.*;
 
 
-public interface AtomicSimulatorInterface extends coreSimulatorInterface{
+public interface AtomicSimulatorInterface extends coreSimulatorInterface, Serializable{
 public void initialize();
 public void initialize(Double d);
 public void initialize(double time);

@@ -6,6 +6,7 @@ import java.util.Map;
 import model.modeling.atomic;
 import model.modeling.digraph;
 import facade.model.simulation.TimeCoordinator;
+import org.apache.commons.lang3.SerializationUtils;
 
 /**
  * Facade class to use Devs-Suite core.
@@ -39,6 +40,18 @@ public class DevsSuiteFacade {
     }
 
     /**
+     * Constructor to simulate a coupled DEVS model with an arbitrary initial 
+     * state. This method is usually used after cloning a coordinator.
+     * @param coordinator 
+     */
+    public DevsSuiteFacade(TimeCoordinator coordinator) {
+        this.atomicSimulator = null;
+        this.coordinator = coordinator;
+    }
+    
+    
+
+    /**
      * Method to start the model simulation
      *
      * @param iterations
@@ -56,7 +69,7 @@ public class DevsSuiteFacade {
      *
      * @param time
      */
-    public void simulateTime(double time) {
+    public void simulateToTime(double time) {
         if(atomicSimulator!=null){
             atomicSimulator.simulate(time); //Start Simulation
         }else{
@@ -70,6 +83,16 @@ public class DevsSuiteFacade {
         }else{
             return coordinator.getSimulationResults();
         }
+    }
+    
+    /**
+     * Method that returns a deep copy of current simulator usen apache commons
+     * clone method that use serialization and deserialization to make a deep
+     * cloning of the original object.
+     * @return 
+     */
+    public Object deepCloning(){
+        return SerializationUtils.clone(atomicSimulator!=null?atomicSimulator:coordinator);
     }
 
 }

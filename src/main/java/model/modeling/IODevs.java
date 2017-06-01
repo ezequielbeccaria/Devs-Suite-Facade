@@ -10,13 +10,14 @@ package model.modeling;
 import java.util.*;
 
 import GenCol.*;
+import java.io.Serializable;
 
 
 
 
 
 
-public interface IODevs extends EntityInterface{
+public interface IODevs extends EntityInterface, Serializable{
 
 public void addInport(String portName);
 public void addOutport(String portName);
