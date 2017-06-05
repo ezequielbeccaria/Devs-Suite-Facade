@@ -1,5 +1,6 @@
 package facade;
 
+import facade.exception.NoModelSettedException;
 import facade.model.simulation.TimeAtomicSimulator;
 import java.util.List;
 import java.util.Map;
@@ -15,9 +16,15 @@ import org.apache.commons.lang3.SerializationUtils;
  */
 public class DevsSuiteFacade {
     //Model Simulator/coordinator 
-    private final TimeAtomicSimulator atomicSimulator;
-    private final TimeCoordinator coordinator;
+    private TimeAtomicSimulator atomicSimulator;
+    private TimeCoordinator coordinator;
 
+    /**
+     * Default constructor. 
+     * Requieres manual setting of model before start simulation.
+     */
+    public DevsSuiteFacade() {}    
+    
     /**
      * Constructor to simulate a DEVSs Coupled Model
      *
@@ -49,14 +56,33 @@ public class DevsSuiteFacade {
         this.coordinator = coordinator;
     }
     
+    /**
+     * Setter for atomic DEVS model
+     * @param instanceModel 
+     */
+    public void setAtomicModel(atomic instanceModel){
+        this.coordinator = null;
+        this.atomicSimulator = new TimeAtomicSimulator(instanceModel);
+        this.atomicSimulator.initialize(0D); //Inicialize at currentTime
+    }
     
+    /**
+     * Setter for Coupled DEVS model
+     * @param instanceModel 
+     */
+    public void setDigraphModel(digraph instanceModel){
+        this.atomicSimulator = null;
+        this.coordinator = new TimeCoordinator(instanceModel, true); //SetSimulators = true 
+    }
 
     /**
      * Method to start the model simulation
      *
      * @param iterations
      */
-    public void simulateIterations(int iterations) {
+    public void simulateIterations(int iterations) throws NoModelSettedException {
+        if(atomicSimulator == null && coordinator == null) 
+            throw new NoModelSettedException("No model to start simulation setted.");
         if(atomicSimulator!=null){
             atomicSimulator.simulate(iterations); //Start Simulation
         }else{
@@ -69,7 +95,9 @@ public class DevsSuiteFacade {
      *
      * @param time
      */
-    public void simulateToTime(double time) {
+    public void simulateToTime(double time) throws NoModelSettedException {
+        if(atomicSimulator == null && coordinator == null) 
+            throw new NoModelSettedException("No model to start simulation setted.");
         if(atomicSimulator!=null){
             atomicSimulator.simulate(time); //Start Simulation
         }else{
