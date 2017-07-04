@@ -33,12 +33,12 @@ public class TimeCoordinator extends coordinator implements SimulationResults {
         this.iterationsGlobalState = new ArrayList<>();
     }
 
-    public void simulate(double maxSimTime) {
+    public void simulate(double maxSimTime) {        
         int i = 1;
         tN = nextTN();
         while ((tN < DevsInterface.INFINITY) && (tN <= maxSimTime)) {
             Logging.log("ITERATION " + i + " ,time: " + tN, Logging.full);
-            System.out.println("ITERATION " + i + " ,time: " + tN); //added for testing
+//            System.out.println("ITERATION " + i + " ,time: " + tN); //added for testing
             computeInputOutput(tN);
             showOutput();
             wrapDeltfunc(tN);
@@ -47,7 +47,8 @@ public class TimeCoordinator extends coordinator implements SimulationResults {
             showModelState();
             i++;
         }
-        System.out.println("Terminated Normally at ITERATION " + i + " ,time: " + tN);
+        Logging.log("Terminated Normally at ITERATION " + i + " ,time: " + tN);
+//        System.out.println("Terminated Normally at ITERATION " + i + " ,time: " + tN);
     }
 
     @Override
