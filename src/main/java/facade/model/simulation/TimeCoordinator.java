@@ -47,7 +47,7 @@ public class TimeCoordinator extends coordinator implements SimulationResults {
             showModelState();
             i++;
         }
-        Logging.log("Terminated Normally at ITERATION " + i + " ,time: " + tN);
+//        Logging.log("Terminated Normally at ITERATION " + i + " ,time: " + tN);
 //        System.out.println("Terminated Normally at ITERATION " + i + " ,time: " + tN);
     }
 
