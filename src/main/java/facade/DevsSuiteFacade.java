@@ -73,6 +73,7 @@ public class DevsSuiteFacade {
     public void setDigraphModel(digraph instanceModel){
         this.atomicSimulator = null;
         this.coordinator = new TimeCoordinator(instanceModel, true); //SetSimulators = true 
+        this.coordinator.initialize(0D); //Inicialize at currentTime
     }
 
     /**

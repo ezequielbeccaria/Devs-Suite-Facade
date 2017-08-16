@@ -29,7 +29,7 @@ public class TimeCoordinator extends coordinator implements SimulationResults {
 
     public TimeCoordinator(Coupled c, boolean setSimulators) {
 //        super(c, setSimulators); //Este contructor esta mal implementado en Devs-Suite
-        super(c, setSimulators, null); //Este contructor se usa debido a lo descripto en la linea anterior
+        super(c, setSimulators, setSimulators); //Este contructor se usa debido a lo descripto en la linea anterior
         this.iterationsGlobalState = new ArrayList<>();
     }
 
