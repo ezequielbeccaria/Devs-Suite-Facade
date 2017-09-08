@@ -14,6 +14,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
+import org.junit.Ignore;
 import util.ModelSelection;
 
 /**
@@ -75,7 +76,7 @@ public class AtomicSVRTest {
      *
      * @throws java.lang.Exception
      */
-    @Test
+    @Test @Ignore
     public void testFit() throws Exception {
         System.out.println("fit test score>0.85");
         Map<String, Object> trainTestData = ModelSelection.trainTestSplit(X, y, 0.2, 42);
@@ -92,7 +93,7 @@ public class AtomicSVRTest {
         assertTrue(metrics[0] > 0.8);
     }
 
-    @Test
+    @Test @Ignore
     public void testDevsAtomic() throws Exception {
         System.out.println("Test DEVS atomic");
 

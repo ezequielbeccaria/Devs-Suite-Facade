@@ -19,7 +19,7 @@ import util.Logging;
  */
 //public class TimeCoordinator extends coupledCoordinator implements SimulationResults{
 public class TimeCoordinator extends coordinator implements SimulationResults {
-
+    protected boolean stopSimFlag;
     protected List<Map> iterationsGlobalState; //var used to store every iteration state
 
     public TimeCoordinator(Coupled c) {
@@ -34,9 +34,10 @@ public class TimeCoordinator extends coordinator implements SimulationResults {
     }
 
     public void simulate(double maxSimTime) {        
+        stopSimFlag = false;
         int i = 1;
         tN = nextTN();
-        while ((tN < DevsInterface.INFINITY) && (tN <= maxSimTime)) {
+        while ((tN < DevsInterface.INFINITY) && (tN <= maxSimTime) && !stopSimFlag) {
             Logging.log("ITERATION " + i + " ,time: " + tN, Logging.full);
 //            System.out.println("ITERATION " + i + " ,time: " + tN); //added for testing
             computeInputOutput(tN);
@@ -69,5 +70,9 @@ public class TimeCoordinator extends coordinator implements SimulationResults {
     @Override
     public List<Map> getSimulationResults() {
         return iterationsGlobalState;
+    }
+    
+    public void stopSimulation(){
+        stopSimFlag = true;
     }
 }
