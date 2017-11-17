@@ -198,7 +198,7 @@ public class coordinator extends atomicSimulator implements CoordinatorInterface
 //	initialized to the same time as the center coord,
 //	useful for real time and distributed simulation
 	public void initialize(double time){
-		System.out.println(myCoupled.getName()+" Initialize !!!!!!!!!!!");
+//		System.out.println(myCoupled.getName()+" Initialize !!!!!!!!!!!");
 		Class [] classes  = {ensembleBag.getTheClass("java.lang.Double")};
 		Object [] args  = {new Double(time)};
 		simulators.tellAll("initialize",classes,args);

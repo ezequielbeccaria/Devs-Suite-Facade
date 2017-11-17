@@ -56,5 +56,10 @@ public class TimeAtomicSimulator extends atomicSimulator implements SimulationRe
         }
         System.out.println("Terminated Normally at ITERATION " + i + " ,time: " + tN);
     }
+    
+    public void simulate(double initTime, double endtime) {
+        initialize(initTime);
+        simulate(endtime);
+    }
 
 }

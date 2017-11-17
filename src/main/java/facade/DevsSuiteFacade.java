@@ -105,6 +105,21 @@ public class DevsSuiteFacade {
             coordinator.simulate(time); //Start Simulation
         }
     }
+    
+    /**
+     * Method to start the model simulation from initTime to endTime
+     *
+     * @param time
+     */
+    public void simulateToTime(double initTime, double endTime) throws NoModelSettedException {
+        if(atomicSimulator == null && coordinator == null) 
+            throw new NoModelSettedException("No model to start simulation setted.");
+        if(atomicSimulator!=null){
+            atomicSimulator.simulate(initTime, endTime); //Start Simulation
+        }else{
+            coordinator.simulate(initTime, endTime); //Start Simulation
+        }
+    }
 
     public List<Map> getSimulationResults() {
         if(atomicSimulator!=null){
