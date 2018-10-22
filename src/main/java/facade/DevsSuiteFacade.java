@@ -120,14 +120,6 @@ public class DevsSuiteFacade {
             coordinator.simulate(initTime, endTime); //Start Simulation
         }
     }
-
-    public List<Map> getSimulationResults() {
-        if(atomicSimulator!=null){
-            return atomicSimulator.getSimulationResults();
-        }else{
-            return coordinator.getSimulationResults();
-        }
-    }
     
     /**
      * Method that returns a deep copy of current simulator usen apache commons

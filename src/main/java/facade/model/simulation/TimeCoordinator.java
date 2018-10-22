@@ -3,7 +3,6 @@ package facade.model.simulation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import facade.StatefulEntity;
 import model.modeling.Coupled;
 import model.modeling.DevsInterface;
 import model.simulation.coordinator;
@@ -18,7 +17,7 @@ import util.Logging;
  * @date 10/08/2016
  */
 //public class TimeCoordinator extends coupledCoordinator implements SimulationResults{
-public class TimeCoordinator extends coordinator implements SimulationResults {
+public class TimeCoordinator extends coordinator {
     protected boolean stopSimFlag;
     protected List<Map> iterationsGlobalState; //var used to store every iteration state
 
@@ -39,7 +38,6 @@ public class TimeCoordinator extends coordinator implements SimulationResults {
         tN = nextTN();
         while ((tN < DevsInterface.INFINITY) && (tN <= maxSimTime) && !stopSimFlag) {
             Logging.log("ITERATION " + i + " ,time: " + tN, Logging.full);
-//            System.out.println("ITERATION " + i + " ,time: " + tN); //added for testing
             computeInputOutput(tN);
             showOutput();
             wrapDeltfunc(tN);
@@ -48,8 +46,6 @@ public class TimeCoordinator extends coordinator implements SimulationResults {
             showModelState();
             i++;
         }
-//        Logging.log("Terminated Normally at ITERATION " + i + " ,time: " + tN);
-//        System.out.println("Terminated Normally at ITERATION " + i + " ,time: " + tN);
     }
     
     public void simulate(double initTime, double maxSimTime) {    
@@ -57,26 +53,6 @@ public class TimeCoordinator extends coordinator implements SimulationResults {
         simulate(maxSimTime);
     }   
 
-    @Override
-    public void showModelState() {
-        if (myCoupled instanceof StatefulEntity) {
-            StatefulEntity e = (StatefulEntity) myCoupled;
-            Map iterationGlobalState = e.getState();
-            iterationGlobalState.put("time", tL); //add time to the state
-            iterationsGlobalState.add(iterationGlobalState);
-        }
-    }
-
-    /**
-     * Getter for simulation global result
-     *
-     * @return
-     */
-    @Override
-    public List<Map> getSimulationResults() {
-        return iterationsGlobalState;
-    }
-    
     public void stopSimulation(){
         stopSimFlag = true;
     }
