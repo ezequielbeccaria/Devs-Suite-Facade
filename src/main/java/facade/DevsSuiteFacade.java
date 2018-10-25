@@ -130,5 +130,17 @@ public class DevsSuiteFacade {
     public Object deepCloning(){
         return SerializationUtils.clone(atomicSimulator!=null?atomicSimulator:coordinator);
     }
+    
+    public void reset(){
+        if(atomicSimulator == null && coordinator == null) 
+            throw new NoModelSettedException("No model to start simulation setted.");
+        if(atomicSimulator!=null){
+            atomicSimulator.initialize(0D); //Inicialize at currentTime
+            atomicSimulator.getModel().initialize();
+        }else{
+            coordinator.initialize(0D); //Inicialize at currentTime
+            coordinator.getModel().initialize();
+        }
+    }
 
 }
