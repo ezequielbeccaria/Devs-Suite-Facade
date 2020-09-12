@@ -2,8 +2,6 @@ package facade;
 
 import facade.exception.NoModelSettedException;
 import facade.model.simulation.TimeAtomicSimulator;
-import java.util.List;
-import java.util.Map;
 import model.modeling.atomic;
 import model.modeling.digraph;
 import facade.model.simulation.TimeCoordinator;
