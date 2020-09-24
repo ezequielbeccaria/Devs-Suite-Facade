@@ -29,10 +29,10 @@ public class TimeCoordinator extends coordinator {
     public TimeCoordinator(Coupled c, boolean setSimulators) {
 //        super(c, setSimulators); //Este contructor esta mal implementado en Devs-Suite
         super(c, setSimulators, setSimulators); //Este contructor se usa debido a lo descripto en la linea anterior
-        this.iterationsGlobalState = new ArrayList<>();
+        this.iterationsGlobalState = new ArrayList<>();        
     }
 
-    public void simulate(double maxSimTime) {        
+    public void simulate(double maxSimTime) {
         stopSimFlag = false;
         int i = 1;
         tN = nextTN();
