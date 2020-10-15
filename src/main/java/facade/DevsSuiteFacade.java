@@ -13,6 +13,7 @@ import org.apache.commons.lang3.SerializationUtils;
  * @author ezequiel
  */
 public class DevsSuiteFacade {
+    private boolean simulationDone;
     //Model Simulator/coordinator 
     private TimeAtomicSimulator atomicSimulator;
     private TimeCoordinator coordinator;
@@ -21,7 +22,9 @@ public class DevsSuiteFacade {
      * Default constructor. 
      * Requieres manual setting of model before start simulation.
      */
-    public DevsSuiteFacade() {}    
+    public DevsSuiteFacade() {
+
+    }
     
     /**
      * Constructor to simulate a DEVSs Coupled Model
@@ -80,6 +83,7 @@ public class DevsSuiteFacade {
      * @param iterations
      */
     public void simulateIterations(int iterations) throws NoModelSettedException {
+        this.simulationDone = false;
         if(atomicSimulator == null && coordinator == null) 
             throw new NoModelSettedException("No model to start simulation setted.");
         if(atomicSimulator!=null){
@@ -87,6 +91,7 @@ public class DevsSuiteFacade {
         }else{
             coordinator.simulate(iterations); //Start Simulation
         }
+        this.simulationDone = true;
     }
     
     /**
@@ -95,6 +100,7 @@ public class DevsSuiteFacade {
      * @param time
      */
     public void simulateToTime(double time) throws NoModelSettedException {
+        this.simulationDone = false;
         if(atomicSimulator == null && coordinator == null) 
             throw new NoModelSettedException("No model to start simulation setted.");
         if(atomicSimulator!=null){
@@ -102,14 +108,17 @@ public class DevsSuiteFacade {
         }else{
             coordinator.simulate(time); //Start Simulation
         }
+        this.simulationDone = true;
     }
     
     /**
      * Method to start the model simulation from initTime to endTime
      *
-     * @param time
+     * @param initTime
+     * @param endTime
      */
     public void simulateToTime(double initTime, double endTime) throws NoModelSettedException {
+        this.simulationDone = false;
         if(atomicSimulator == null && coordinator == null) 
             throw new NoModelSettedException("No model to start simulation setted.");
         if(atomicSimulator!=null){
@@ -117,6 +126,7 @@ public class DevsSuiteFacade {
         }else{
             coordinator.simulate(initTime, endTime); //Start Simulation
         }
+        this.simulationDone = true;
     }
     
     /**
@@ -141,4 +151,7 @@ public class DevsSuiteFacade {
         }
     }
 
+    public boolean isSimulationDone() {
+        return simulationDone;
+    }
 }
