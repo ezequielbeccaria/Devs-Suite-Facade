@@ -18,7 +18,7 @@ Additionally, the possibility of simulating the models by time limit is included
     <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>4.12</version>
+        <version>4.13.1</version>
         <scope>test</scope>
     </dependency>
 
