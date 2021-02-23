@@ -103,7 +103,7 @@ public void Continue(double e){
   public void deltcon(double e,MessageInterface x){deltcon(e,(message)x);}
   public void deltcon(double e,message x){ //usual devs
    deltint();
-   deltext(0,x);
+   deltext(e,x);
 }
 
  public MessageInterface Out(){
