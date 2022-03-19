@@ -147,7 +147,7 @@ public class DevsSuiteFacade {
             atomicSimulator.getModel().initialize();
         }else{
             coordinator.initialize(0D); //Inicialize at currentTime
-            coordinator.getModel().initialize();
+//            coordinator.getModel().initialize();
         }
     }
 
