@@ -144,10 +144,8 @@ public class DevsSuiteFacade {
             throw new NoModelSettedException("No model to start simulation setted.");
         if(atomicSimulator!=null){
             atomicSimulator.initialize(0D); //Inicialize at currentTime
-            atomicSimulator.getModel().initialize();
         }else{
             coordinator.initialize(0D); //Inicialize at currentTime
-//            coordinator.getModel().initialize();
         }
     }
 
